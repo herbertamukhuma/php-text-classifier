@@ -10,15 +10,8 @@ use TextClassifier\DataSet\WordDictionary;
 use TextClassifier\Exception\DataSetException;
 use TextClassifier\Exception\TextClassifierException;
 
-class TextClassifier
+class TextClassifier extends Classifier
 {
-
-    private $dataset;
-    private $classifier;
-
-    private $trained = false;
-
-    private $verbose = false;
 
     /**
      * TextClassifier constructor.
@@ -57,7 +50,7 @@ class TextClassifier
      */
     private function prepareText($text){
 
-        if($this->verbose) print("Preparing sample text for prediction\n");
+        if($this->verbose) print("\nPreparing sample text for prediction\n");
 
         //check if the text is empty
         if(empty($text)){
@@ -113,7 +106,13 @@ class TextClassifier
      */
     public function train()
     {
-        if($this->verbose) print("Training\n\n");
+        //get the starting time
+        $this->trainingStartTime = time();
+
+        if($this->verbose) {
+            print_r("\nTraining....\n");
+            print_r("starting time: " . date("Y-m-d H:i:s", $this->trainingStartTime) . "\n");
+        }
 
         $samples = $this->dataset->getSamples();
         $labels = $this->dataset->getLabels();
@@ -134,7 +133,15 @@ class TextClassifier
 
         $this->trained = true;
 
-        if($this->verbose) print("Training completed!\n");
+        //get training stop time
+        $this->trainingCompletionTime = time();
+        $duration = $this->trainingCompletionTime - $this->trainingStartTime;
+
+        if($this->verbose) {
+            print_r("\nTraining completed!\n");
+            print_r("completion time: " . date("Y-m-d H:i:s", $this->trainingCompletionTime) . "\n");
+            print_r("training duration: $duration seconds \n");
+        }
     }
 
     /**
@@ -158,5 +165,20 @@ class TextClassifier
         return $this->classifier->predictProbability($words);
     }
 
+    /**
+     * @return bool
+     */
+    public function isTrained()
+    {
+        return $this->trained;
+    }
+
+    /**
+     * @return DataSet
+     */
+    public function getDataset()
+    {
+        return $this->dataset;
+    }
     //end of class
 }

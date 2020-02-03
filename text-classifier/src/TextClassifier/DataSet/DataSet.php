@@ -46,7 +46,6 @@ class DataSet
     }
 
     /**
-     * initializes the dataset
      * @param $datasetName
      * @param $sampleArrayLength
      * @throws DataSetException
@@ -54,10 +53,10 @@ class DataSet
      */
     private function initializeDataSet($datasetName, $sampleArrayLength){
 
-        if($this->verbose) print("Initializing dataset\n\n");
+        if($this->verbose) print_r("\nInitializing dataset\n");
 
         //get available datasets
-        if($this->verbose) print("retrieving available datasets...\n");
+        if($this->verbose) print_r("\nretrieving available datasets...\n");
         $datasets = $this->getDataSets();
 
 
@@ -78,11 +77,11 @@ class DataSet
         //holds the the text documents in their raw form
         $raw_samples = array();
 
-        if($this->verbose) print("Reading dataset ($datasetName) data\n\n");
+        if($this->verbose) print_r("\nReading dataset ($datasetName) data\n");
 
         while ($iterator->valid()){
 
-            if($this->verbose) print("reading file ". $iterator->getBasename() ."\n");
+            if($this->verbose) print_r("reading file ". $iterator->getBasename() ."\n");
 
             //verify file type
             if($iterator->getExtension() !== "json"){
@@ -133,7 +132,7 @@ class DataSet
      */
     private function populateWordDictionary($rawSamples){
 
-        if($this->verbose) print("Populating word dictionary\n\n");
+        if($this->verbose) print_r("\nPopulating word dictionary\n");
 
         foreach ($rawSamples as $label => $texts){
 
@@ -156,7 +155,7 @@ class DataSet
      */
     private function integerEncodeRawSamples($rawSamples){
 
-        if($this->verbose) print("Integer encoding raw samples \n\n");
+        if($this->verbose) print_r("\nInteger encoding raw samples \n");
 
         foreach ($rawSamples as $label => $texts){
 
@@ -294,6 +293,14 @@ class DataSet
     public function getSampleArrayLength()
     {
         return $this->sampleArrayLength;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDatasetName()
+    {
+        return $this->datasetName;
     }
     //end of class
 }

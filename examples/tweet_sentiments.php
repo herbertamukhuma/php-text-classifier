@@ -9,5 +9,5 @@ $dataset = new DataSet("tweets", 100, 1150, true);
 
 $classifier = new TextClassifier($dataset, true);
 $classifier->train();
-$prediction = $classifier->classify("I hate myself");
+$prediction = $classifier->classify("This life is miserable, so unhappy");
 print_r($prediction);

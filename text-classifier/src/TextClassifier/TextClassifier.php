@@ -4,6 +4,7 @@ namespace TextClassifier;
 
 
 use Phpml\Classification\SVC;
+use Phpml\FeatureExtraction\TfIdfTransformer;
 use Phpml\SupportVectorMachine\Kernel;
 use TextClassifier\DataSet\DataSet;
 use TextClassifier\DataSet\WordDictionary;
@@ -94,7 +95,7 @@ class TextClassifier extends Classifier
         foreach ($words as $key => $word){
             $words[$key] = $word/$max;
         }
-
+        
         //return the encoded array
         return $words;
 

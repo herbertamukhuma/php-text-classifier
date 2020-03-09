@@ -3,6 +3,7 @@
 namespace TextClassifier\DataSet;
 
 use FilesystemIterator;
+use Phpml\FeatureExtraction\TfIdfTransformer;
 use TextClassifier\Exception\DataSetException;
 
 class DataSet
